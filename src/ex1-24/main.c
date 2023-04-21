@@ -27,7 +27,7 @@ void syntax ( char c )
             ++lsq; 
         else if ( c == ']' ) 
             ++rsq;
-        else if ( c == '\\' ) {
+        else if ( c == '/' ) {
             c = getchar(); 
                 if ( c == '*' ) 
                     ++lc;
