@@ -10,8 +10,8 @@ int main ()
 
 void syntax ( char c )
 {
-    unsigned int rbi, lbi,  lbr, rbr,   rsq, lsq,   lc, rc; 
-    lbi = rbi = lbr = rbr = rsq = lsq = lc = rc = 0;
+    unsigned int rbi, lbi,  lbr, rbr,   rsq, lsq,   lc, rc,    sq, dq; 
+    lbi = rbi = lbr = rbr = rsq = lsq = lc = rc = sq = dq = 0;
     
     /* Look for syntax errors! */ 
     while ( c != EOF ) {
@@ -37,7 +37,11 @@ void syntax ( char c )
                 if ( c == '/' ) 
                     ++rc; 
         }
-    
+        else if ( c == '\'' ) 
+            ++sq; 
+        else if ( c == '\"' ) 
+            ++dq; 
+
         c = getchar();
     }
 
@@ -55,7 +59,11 @@ void syntax ( char c )
     if ( lsq < rsq ) /* Missed [ */ 
         printf("Syntax Error => [BRACKETS] \n\t Are you missing a \'[\'? \n");
     if ( lc > rc ) /* Did'nt close comment! */ 
-        printf("Syntax Error => [COMMENTS] \n\t Did you close your comment? \n\t Fix: (Add) => \'*/\' \n");
+        printf("Syntax Error => [COMMENTS] \n\t Did you close your comment? \n\t\033[0;32m Fix: (Add) => \'*/\'  \033[0m \n");
     if ( lc < rc ) /* Did'nt open comment! */ 
-        printf("Syntax Error => [COMMENTS] \n\t Did you open your comment? \n\t Fix: (Add) => \'/*\' \n");
+        printf("Syntax Error => [COMMENTS] \n\t Did you open your comment? \n\t\033[0;32m Fix: (Add) => \'/*\'  \033[0m \n");
+    if ( sq % 2 != 0)
+        printf("Syntax Error => [QUOTES] \n\t Did you close your quotes?   \n\t\033[0;31m Missed (\') \033[0m \n"); 
+    if ( dq % 2 != 0)
+        printf("Syntax Error => [QUOTES] \n\t Did you close your quotes?    \n\t\033[0;31m Missed (\")  \033[0m \n");
 }
